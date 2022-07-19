@@ -1,0 +1,63 @@
+2022.07.19.Tue
+
+공룡게임 만들기
+
+점프 성공 시 점수 획득하는 코드를 구현해보려고 했지만 집어넣는 위치가 잘못된건지 아니면 오브젝트 설정을 잘못한건지 모르겠다.
+UI가 별로 없어서 얼마 안 걸릴 줄 알았는데 생각보다 복잡했다.
+처음부터 욕심을 부렸나
+이번주에 스스로 몇 시간 더 해보고 안 되면 flappy bird로 갈아타야 할 것 같다.
+
+다음 코드는 점수 획득에 쓰려고 시도했던 코드이다. 지워야될듯.
+
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Score : MonoBehaviour
+{
+    [HideInInspector]
+    public int currentScore = 0;
+
+    [HideInInspector]
+    public int highScore = 0;
+
+    readonly string HS_KEY = "highscore";
+
+    public Text scoreText;
+
+    void Start()
+    {
+        scoreText.text = currentScore.ToString();
+        highScore = PlayerPrefs.GetInt(HS_KEY);
+    }
+
+    public void StartScoreCount()
+    {
+        StartCoroutine(increaseScore(1));
+    }
+
+    public void ResetScore()
+    {
+        this.currentScore = 0;
+    }
+
+    public void UpdateHighscore()
+    {
+        if (currentScore > highScore)
+        {
+            PlayerPrefs.SetInt(HS_KEY, currentScore);
+            highScore = currentScore;
+        }
+    }
+
+    public IEnumerator increaseScore(int value)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            currentScore += value;
+            scoreText.text = "score: " + currentScore.ToString();
+
+        }
+    }
+}
