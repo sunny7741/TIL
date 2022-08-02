@@ -1,0 +1,66 @@
+2022.08.02.Tue
+
+똥피하기 게임
+
+1. 캐릭터가 움직일 때, 달리는 모션으로 즉각 바뀔 수 있게 바꾸었다.
+2. 좌우로 움직이기 위해 키로 조작할 때의 horizontal 절대값을 받아서 이미지가 좌우반전이 되게끔 만들었다.
+3. 화면 벽에 막힐 수 있도록 움직임에 제한을 두었다.
+-정확히는 모르겠는데 코드를 읽어보았을 때 고정된 카메라를 기준으로 화면의 0.05를 넘어가면 0.05, 0.95를 넘어가면 0.95로 모션은 계속되면서 고정이 되도록 설정한 것 같다.
+마음에 드는 비 스프라이트가 없어서 유튜브에서 제공해 준 똥 스프라이트를 넣었다.
+기회가 된다면 도트를 배워서 직접 스프라이트를 만드는 것도 나쁘지 않을 것 같다.
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    private Rigidbody2D rigidbody;
+
+    private Animator animator;
+
+    private SpriteRenderer renderer;
+
+    private float speed = 3;
+
+    private float horizontal;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        renderer = GetComponent<SpriteRenderer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+
+        PlayerMove();
+        ScreenChk();
+    }
+
+    private void PlayerMove()
+    {
+        animator.SetFloat("speed", Mathf.Abs(horizontal));
+        if(horizontal < 0)
+        {
+            renderer.flipX = true;
+        }    
+        else
+        {
+            renderer.flipX = false;
+        }
+        rigidbody.velocity = new Vector2(horizontal * speed, rigidbody.velocity.y);
+    }    
+
+    private void ScreenChk()
+    {
+        Vector3 worlpos = Camera.main.WorldToViewportPoint(transform.position);
+        if (worlpos.x < 0.05f) worlpos.x = 0.05f;
+        if (worlpos.x > 0.95f) worlpos.x = 0.95f;
+        this.transform.position = Camera.main.ViewportToWorldPoint(worlpos);
+    }
+}
