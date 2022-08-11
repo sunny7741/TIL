@@ -1,0 +1,63 @@
+2022.08.11.Thur
+
+휘년 선배님이 깃허브 사용법을 자세히 알려주시고 자료까지 받았다.
+개발자들은 모두 깃허브를 사용한다고 들었는데 단순 개인소장용이 아니라 작업을 위해 개발팀과 다같이 공유하고 이어나가는 시스템이란 것을 배웠다.
+내가 나중에 개발을 하고 있을지는 모르겠지만 오늘 얻은 정보를 미래에 써먹을 수 있을 것 같다. 
+
+설명을 듣고 시간이 대략 한 시간 정도 남아서 똥 피하기 게임의 enemy를 만들었다. 
+enemy가 떨어지면서 player나 ground에 충돌하면 destroy되는 스크립트를 짰다.
+
+
+#poop 스크립트
+private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    
+    
+#GameMagnager 스크립트
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+
+    [SerializeField]
+    private GameObject poop;
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(CreatepoopRoutine());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    IEnumerator CreatepoopRoutine()
+    {
+        while(true)
+        {
+            CreatePoop();
+            yield return new WaitForSeconds(1);
+
+        }
+    }
+
+    private void CreatePoop()
+    {
+        Vector3 pos = new Vector3(0, 6, 0);
+        Instantiate(poop, pos, Quaternion.identity);
+    }
+}
