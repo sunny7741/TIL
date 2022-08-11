@@ -6,6 +6,8 @@
 
 설명을 듣고 시간이 대략 한 시간 정도 남아서 똥 피하기 게임의 enemy를 만들었다. 
 enemy가 떨어지면서 player나 ground에 충돌하면 destroy되는 스크립트를 짰다.
+GameManager에 poop 스크립트를 넣었는데도 poop이 사라지지 않아서 여기서 많은 시간이 걸렸다.
+문제점은 poop prefab에 스크립트를 넣지 않았다는 것이었다. 다행히 넣자마자 실행이 잘 되었다.
 
 
 #poop 스크립트
