@@ -1,0 +1,30 @@
+2022.08.16.Tue
+
+똥이 떨어지는 위치를 랜덤으로 뽑았다.
+
+ Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(UnityEngine.Random.Range(0.0f, 1.0f), 1.1f, 0));
+ 
+똥이 바닥에 닿으면 1점씩 올라가게 했다.
+
+ public void Score()
+    {
+        score++;
+        Debug.Log("score : " + score);
+    }
+    
+    
+영상에서 나온 싱글톤패턴 적용인데 아직 잘 이해를 못했다. 나중에 공부를 다시 해봐야겠다.
+
+private static GameManager _instance;
+    public static GameManager instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+            }
+            return _instance;
+        }
+    }    
+    
